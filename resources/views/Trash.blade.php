@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Trash</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,7 +43,7 @@
 </head>
   <body>
   <a name="" id="" class="btn btn-primary d-inline-block m-2 float-right" href="{{url('/register')}}" role="button">Add</a>
-  <a name="" id="" class="btn btn-danger d-inline-block m-2 float-right" href="{{url('trash')}}" role="button">Go To Trash</a>
+  <a name="" id="" class="btn btn-primary d-inline-block m-2 float-right" href="{{url('/view')}}" role="button">Customer View</a>
     <table class="table table-striped" class="text-center" border='2px'style="background-color:lightgrey">
         <thead>
             <tr>
@@ -71,8 +71,8 @@
               <td>{{$customer->address}}</td>
               <td>{{$customer->gender}}</td>
 
-              <td ><a href="/delete/{{$customer->id}}" ><button class="btn btn-danger">Trash</button></a>
-              <a href="/edit/{{$customer->id}}" >  <button class="btn btn-primary">Update</button></a>
+              <td ><a href="/permanentDelete/{{$customer->id}}" ><button class="btn btn-danger">Delete</button></a>
+              <a href="/restore/{{$customer->id}}" >  <button class="btn btn-primary">ReStore</button></a>
               </td>
            </tr>
             @endforeach

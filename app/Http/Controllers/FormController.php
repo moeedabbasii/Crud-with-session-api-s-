@@ -15,6 +15,9 @@ public function register(){
 }
 public function store(Request $request){
 
+    // p($request->all());
+    // die;
+
     // dd($request->all());
     $request->validate(
         [
@@ -31,16 +34,16 @@ public function store(Request $request){
         $entries= new Customer;
         $entries ->name=$request['name'];
         $entries->email=$request['email'];
-        $entries->contact=$request['contact']; 
+        $entries->contact=$request['contact'];
         $entries->country=$request['country'];
-        $entries->province=$request['province']; 
-        $entries->address=$request['address'];  
+        $entries->province=$request['province'];
+        $entries->address=$request['address'];
         $entries->password= md5($request['password']);
         $entries->confirm_password= md5($request['confirm_password']);
         $entries->gender=$request['gender'];
 
        $entries->save();
-       return redirect('/view'); 
+       return redirect('/view');
     // echo"<pre>";
 //     echo "<pre>";
 //     print_r($request->all());
@@ -49,14 +52,34 @@ public function store(Request $request){
     $entries=Customer::all();
     $data=compact('entries');
     return view('customer')->with($data);
-    
+
+}
+public function trash(){
+   $entries = Customer::onlyTrashed()->get();
+    $data=compact('entries');
+    return view('Trash')->with($data);
+
 }
 
 
 public function destory($id){
     $data = Customer::find($id);
     $data->delete();
+    $test = Customer::all();
+    $entries = compact('test');
+    return redirect('/view')->with($entries);
+}
+public function restore($id){
+    $data = Customer::withTrashed()->find($id);
+    $data->restore();
     return redirect('/view');
+}
+public function permanentDelete($id){
+    $data = Customer::withTrashed()->find($id);
+    $data->forceDelete();
+    $entries = Customer::onlyTrashed()->get();
+    $data=compact('entries');
+    return view('Trash')->with($data);
 }
 public function edit($id){
     $data=Customer::find($id);
@@ -71,16 +94,16 @@ public function update($id,Request $request){
     $entries= new Customer;
         $entries ->name=$request['name'];
         $entries->email=$request['email'];
-        $entries->contact=$request['contact']; 
+        $entries->contact=$request['contact'];
         $entries->country=$request['country'];
-        $entries->province=$request['province']; 
-        $entries->address=$request['address'];  
+        $entries->province=$request['province'];
+        $entries->address=$request['address'];
         $entries->password= md5($request['password']);
         $entries->confirm_password= md5($request['confirm_password']);
         $entries->gender=$request['gender'];
         $entries->save();
-        return redirect('/view'); 
-    
+        return redirect('/view');
+
 }
 
 
